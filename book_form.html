@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}{{'Edit' if book else 'Add'}} Book{% endblock %}
+{% block content %}
+<div class="formbox"><h1>{{'Edit' if book else 'Add'}} Book</h1>
+<form method="post" class="formgrid">
+<label>Book Name*<input name="book_name" required value="{{book.book_name if book else ''}}"></label>
+<label>Book Code / Accession No.*<input name="accession_no" required value="{{book.accession_no if book else ''}}"></label>
+<label>Author<input name="author" value="{{book.author if book else ''}}"></label>
+<label>Subject<input name="subject" value="{{book.subject if book else ''}}"></label>
+<label>Class<input name="class_name" value="{{book.class_name if book else ''}}"></label>
+<label>Category<input name="category" value="{{book.category if book else ''}}"></label>
+<label>Quantity<input type="number" min="1" name="quantity" required value="{{book.quantity if book else 1}}"></label>
+<label>Rack Number<input name="rack_no" value="{{book.rack_no if book else ''}}"></label>
+<label>Shelf Number<input name="shelf_no" value="{{book.shelf_no if book else ''}}"></label>
+<div><button>Save Book</button> <a class="button secondary" href="{{url_for('books')}}">Cancel</a></div>
+</form></div>
+{% endblock %}

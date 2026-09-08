@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Admin Login{% endblock %}
+{% block content %}
+<div class="auth">
+<h1>🔐 Library Incharge Login</h1>
+<form method="post">
+<label>Username</label><input name="username" required autofocus>
+<label>Password</label><input type="password" name="password" required>
+<button class="wide">Login</button>
+</form>
+<p class="muted">Default first-run login: admin / admin123</p>
+</div>
+{% endblock %}

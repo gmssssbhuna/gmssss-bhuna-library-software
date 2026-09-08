@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% block title %}Book Search{% endblock %}
+{% block content %}
+<section class="hero">
+<h1>📚 Find a Library Book</h1>
+<p>Search books by name, author, subject, class or accession number.</p>
+<form class="search" method="get">
+<input name="q" value="{{q}}" placeholder="e.g. Mathematics, NCERT, Science...">
+<button>Search</button>
+</form>
+</section>
+<div class="section-head"><h2>Library Books</h2><span>{{books|length}} result(s)</span></div>
+<div class="grid">
+{% for b in books %}
+<article class="card">
+<div class="card-title">{{b.book_name}}</div>
+<div class="muted">Accession: {{b.accession_no}}</div>
+<div class="details">
+<p><b>Author:</b> {{b.author or '—'}}</p>
+<p><b>Subject:</b> {{b.subject or '—'}}</p>
+<p><b>Class:</b> {{b.class_name or '—'}}</p>
+<p><b>Rack:</b> {{b.rack_no or '—'}} &nbsp; <b>Shelf:</b> {{b.shelf_no or '—'}}</p>
+</div>
+<div class="status {% if b.available_quantity>0 %}available{% else %}issued{% endif %}">
+{% if b.available_quantity>0 %}✓ Available ({{b.available_quantity}}){% else %}✕ Currently Issued{% endif %}
+</div>
+</article>
+{% else %}<div class="empty">No books found.</div>{% endfor %}
+</div>
+<p class="note">Students can check availability online; book issue/reservation is completed physically through the library incharge.</p>
+{% endblock %}

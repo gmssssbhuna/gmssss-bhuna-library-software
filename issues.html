@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block title %}Issue / Return{% endblock %}
+{% block content %}
+<div class="section-head"><h1>Book Issue / Return</h1></div>
+<div class="formbox"><h2>Issue a Book</h2>
+{% if books and students %}
+<form method="post" action="{{url_for('issue_book')}}" class="formgrid">
+<label>Student<select name="student_id" required>{% for s in students %}<option value="{{s.id}}">{{s.student_name}} — {{s.admission_no}} — {{s.class_name}} {{s.section or ''}}</option>{% endfor %}</select></label>
+<label>Book<select name="book_id" required>{% for b in books %}<option value="{{b.id}}">{{b.book_name}} — {{b.accession_no}} ({{b.available_quantity}} available)</option>{% endfor %}</select></label>
+<label>Issue Date<input type="date" name="issue_date" value="{{__import__('datetime').date.today().isoformat()}}"></label>
+<label>Due / Return Date<input type="date" name="due_date"></label>
+<div><button>Issue Book</button></div>
+</form>
+{% else %}<p>Add at least one student and one available book before issuing.</p>{% endif %}
+</div>
+<div class="table-wrap"><table><tr><th>Student</th><th>Book</th><th>Issue</th><th>Due</th><th>Return</th><th>Status</th><th>Action</th></tr>
+{% for r in issues %}<tr><td>{{r.student_name}}<br><small>{{r.admission_no}} · {{r.class_name}} {{r.section or ''}}</small></td><td>{{r.book_name}}<br><small>{{r.accession_no}}</small></td><td>{{r.issue_date}}</td><td>{{r.due_date or '—'}}</td><td>{{r.return_date or '—'}}</td><td>{{r.status}}</td><td>{% if r.status=='Issued' %}<form method="post" action="{{url_for('return_book',issue_id=r.id)}}"><button class="smallbtn">Mark Returned</button></form>{% else %}—{% endif %}</td></tr>{% endfor %}
+</table></div>
+{% endblock %}
