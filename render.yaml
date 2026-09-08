@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: government-school-bhuna-library
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13
+      - key: SECRET_KEY
+        generateValue: true
+    disk:
+      name: library-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
